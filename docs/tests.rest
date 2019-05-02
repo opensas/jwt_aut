@@ -1,0 +1,76 @@
+# Variables
+
+@apiUrl = http://localhost:4000
+@authUrl = {{apiUrl}}/users/authenticate
+
+@username = produccion-api-username
+@password = produccion-api-test-Lj1KzZii28
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODc5NzEsImV4cCI6MTU1NzM5Mjc3MSwiaWF0IjoxNTU2Nzg3OTcxfQ.fCWBV_Yw4w18dy305I_5klc_nlFIxTpugO6meH95jnE
+
+# form version
+curl -X POST "https://localhost:4000/users/authenticate" \
+  -H "accept: application/json" \
+  -H "content-type: application/x-www-form-urlencoded" \
+  -d 'username=test&password=test'
+
+# form version
+curl -d "Username=test&Password=test" -X POST http://localhost:4000/users/authenticate
+
+# json version
+curl -H "Content-Type: application/json" -d '{"Username": "test","Password": "test"}' -X POST http://localhost:4000/users/authenticate
+
+# windows curl
+curl -H "Content-Type: application/json" -d "{/"Username/": /"test/",/"Password/": /"test/"}" -X POST http://localhost:4000/users/authenticate
+
+###
+# Retorna el token para el usuario {{username}} con la clave {{password}}
+# @name auth.get_token
+POST {{authUrl}}
+content-type: application/json
+
+{
+  "Username": "{{username}}",
+  "Password": "{{password}}"
+}
+
+###
+# Retorna error cuando la clave pasada es incorrecta
+# @name auth.get_token.bad_password
+POST {{authUrl}}
+accept: application/json
+content-type: application/json
+
+{
+  "Username": "{{username}}",
+  "Password": "!{{password}}"
+}
+
+###
+# Retorna todos los usuarios cuando el token es pasado como
+# @name users.with_token
+GET http://localhost:4000/users
+accept: application/json
+authorization: Bearer {{token}}
+
+###
+# Retorna error cuando el token pasado es erróneo
+# @name users.with_bad_token
+GET http://localhost:4000/users
+accept: application/json
+authorization: Bearer !{{token}}
+
+###
+# Retorna error cuando no pasan ningún token
+# @name users.with_no_token
+GET http://localhost:4000/users
+accept: application/json
+
+###
+# Retorna todos los usuarios cuando el token es pasado como
+# @name users.with_token
+GET http://localhost:4000/info
+accept: application/json
+authorization: Bearer {{token}}
+
+
