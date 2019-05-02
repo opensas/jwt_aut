@@ -54,6 +54,23 @@ $ curl -X POST http://localhost:4000/users/authenticate \
 }
 ```
 
+Sintaxis de curl de windows
+
+```shell
+curl -X POST http://localhost:4000/users/authenticate ^
+  -H "Content-Type: application/json" ^
+  -H "Accept: application/json" ^
+  -d "{\"Username\": \"produccion-api-username\",\"Password\": \"produccion-api-test-Lj1KzZii28\"}"
+
+{
+  "id":2,
+  "firstName":"Produccion",
+  "lastName":"API",
+  "username":"produccion-api-username",
+  "password":null,"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODkwNzEsImV4cCI6MTU1NzM5Mzg3MSwiaWF0IjoxNTU2Nzg5MDcxfQ.2vk-C83XRgI0CwNPXR1_zjsOTzk3OCVt2j_esdGxNqw"
+}
+```
+
 ## Acceder a un endpoint protegido utilizando el JWT
 
 Utilizando el token obtenido en el ejemplo anterior, pasarlo en un header de tipo Authorization
@@ -93,6 +110,14 @@ $ curl -X GET http://localhost:4000/info \
     "server":""
   }
 }
+```
+
+Sintaxis de curl de windows
+
+```shell
+curl -X GET http://localhost:4000/info ^
+  -H "Accept: application/json" ^
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODkwNzEsImV4cCI6MTU1NzM5Mzg3MSwiaWF0IjoxNTU2Nzg5MDcxfQ.2vk-C83XRgI0CwNPXR1_zjsOTzk3OCVt2j_esdGxNqw"
 ```
 
 Para más ejemplos de uso ver el archivo `docs/examples.rest`
