@@ -9,10 +9,10 @@
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODc5NzEsImV4cCI6MTU1NzM5Mjc3MSwiaWF0IjoxNTU2Nzg3OTcxfQ.fCWBV_Yw4w18dy305I_5klc_nlFIxTpugO6meH95jnE
 
 # form version
-curl -X POST "https://localhost:4000/users/authenticate" \
+curl -X POST "http://localhost:4000/users/authenticate" \
   -H "accept: application/json" \
   -H "content-type: application/x-www-form-urlencoded" \
-  -d 'username=test&password=test'
+  -d 'username=produccion-api-username&password=produccion-api-test-Lj1KzZii28'
 
 # form version
 curl -d "Username=test&Password=test" -X POST http://localhost:4000/users/authenticate
@@ -20,8 +20,21 @@ curl -d "Username=test&Password=test" -X POST http://localhost:4000/users/authen
 # json version
 curl -H "Content-Type: application/json" -d '{"Username": "test","Password": "test"}' -X POST http://localhost:4000/users/authenticate
 
+# json version
+curl -X POST http://localhost:4000/users/authenticate \
+  -H "Content-Type: application/json" \
+  -H "Accept: : application/json" \
+  -d '{"Username": "produccion-api-username","Password": "produccion-api-test-Lj1KzZii28"}'
+
 # windows curl
 curl -H "Content-Type: application/json" -d "{/"Username/": /"test/",/"Password/": /"test/"}" -X POST http://localhost:4000/users/authenticate
+
+# json version
+curl -X GET http://localhost:4000/info \
+  -H "Accept: application/json" \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODkwNzEsImV4cCI6MTU1NzM5Mzg3MSwiaWF0IjoxNTU2Nzg5MDcxfQ.2vk-C83XRgI0CwNPXR1_zjsOTzk3OCVt2j_esdGxNqw"
+
+
 
 ###
 # Retorna el token para el usuario {{username}} con la clave {{password}}
