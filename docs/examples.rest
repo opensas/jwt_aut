@@ -87,3 +87,20 @@ accept: application/json
 authorization: Bearer {{token}}
 
 
+###
+# Retorna el token para el usuario {{username}} con la clave {{password}}
+# @name auth.get_token
+POST http://localhost:4000/users/authenticate
+content-type: application/json
+
+{
+  "Username": "produccion-api-username",
+  "Password": "produccion-api-test-Lj1KzZii28"
+}
+
+###
+# Retorna todos los usuarios cuando el token es pasado como
+# @name users.with_token
+GET http://localhost:4000/info
+accept: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY4MjkwODIsImV4cCI6MTU1NzQzMzg4MiwiaWF0IjoxNTU2ODI5MDgyfQ.FpPJtz-4tNtGmkf6RAu7RFm7eaadRryjqQlu4Uj7T9I
