@@ -17,7 +17,7 @@ $ git clone git@gitlab.com:sgte-it/trabajo/fiscalizacion/jwt_auth.git
 - Descargar las dependencias del y ejecutar el proyecto
 
 ```shell
-$ cd src/
+$ cd jwt_auth/src
 
 $ dotnet restore
   Restore completed in 764.58 ms for /home/sas/devel/apps/sgte-it/trabajo/fiscalizacion/tmp/jwt_auth/src/src.csproj.
