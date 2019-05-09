@@ -31,7 +31,39 @@ Now listening on: http://localhost:4000
 Application started. Press Ctrl+C to shut down.
 ```
 
-## Obtención de un JWT (Json Web Token)
+## Instalación desde docker
+
+- Descargar el repositorio
+
+```shell
+$ git clone git@gitlab.com:sgte-it/trabajo/fiscalizacion/jwt_auth.git
+```
+
+- Crear la imagen y ejecutar un container
+
+```shell
+$ cd jwt_auth/src
+
+$ docker build -t jwt_auth-image .
+Sending build context to Docker daemon  2.445MB
+Step 1/10 : FROM mcr.microsoft.com/dotnet/core/sdk:2.2-alpine AS build
+ ---> 857924d04240
+[...]
+Successfully built 5ef516833260
+Successfully tagged jwt_auth-image:latest
+
+$ docker run -it --rm -p 4000:4000 jwt_auth-image jwt_auth-container
+warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
+      No XML encryptor configured. Key {8ce6a9e1-ada4-43e0-8ac3-9cff47f024f6} may be persisted to storage in unencrypted form.
+Hosting environment: Production
+Content root path: /app
+Now listening on: http://0.0.0.0:4000
+Application started. Press Ctrl+C to shut down.
+```
+
+## Ejemplos de uso
+
+### Obtención de un JWT (Json Web Token)
 
 Usuario: "produccion-api-username"
 
@@ -41,9 +73,9 @@ Para obtener un JWT hay que efectuar un POST al endpoint /apiRoot/users/authenti
 
 ```shell
 $ curl -X POST http://localhost:4000/users/authenticate \
->   -H "Content-Type: application/json" \
->   -H "Accept: application/json" \
->   -d '{"Username": "produccion-api-username","Password": "produccion-api-test-Lj1KzZii28"}'
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"Username": "produccion-api-username","Password": "produccion-api-test-Lj1KzZii28"}'
 
 {
   "id":2,
@@ -54,7 +86,7 @@ $ curl -X POST http://localhost:4000/users/authenticate \
 }
 ```
 
-Sintaxis de curl de windows
+Sintaxis de curl para windows
 
 ```shell
 curl -X POST http://localhost:4000/users/authenticate ^
@@ -71,7 +103,7 @@ curl -X POST http://localhost:4000/users/authenticate ^
 }
 ```
 
-## Acceder a un endpoint protegido utilizando el JWT
+### Acceder a un endpoint protegido utilizando el JWT
 
 Utilizando el token obtenido en el ejemplo anterior, pasarlo en un header de tipo Authorization
 
@@ -112,7 +144,7 @@ $ curl -X GET http://localhost:4000/info \
 }
 ```
 
-Sintaxis de curl de windows
+Sintaxis de curl para windows
 
 ```shell
 curl -X GET http://localhost:4000/info ^
@@ -120,4 +152,50 @@ curl -X GET http://localhost:4000/info ^
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODkwNzEsImV4cCI6MTU1NzM5Mzg3MSwiaWF0IjoxNTU2Nzg5MDcxfQ.2vk-C83XRgI0CwNPXR1_zjsOTzk3OCVt2j_esdGxNqw"
 ```
 
-Para más ejemplos de uso ver el archivo `docs/examples.rest`
+Consultar scripts en `docs/scripts` y otros ejemplos de uso en `docs/examples.rest`
+
+### Ejemplo completo
+
+Obtenemos un token y lo guardamos en la variable de entorno TOKEN
+
+Nota: usamos [jq](https://stedolan.github.io/jq/download/) para parsear y formatear el json y extraer el token
+
+```shell
+$ TOKEN=$( \
+  curl -s \
+  -X POST http://localhost:4000/users/authenticate \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"Username": "produccion-api-username","Password": "produccion-api-test-Lj1KzZii28"}' | \
+  jq -r '.token' \
+)
+
+$ echo $TOKEN
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTczNzg2NTgsImV4cCI6MTU1Nzk4MzQ1OCwiaWF0IjoxNTU3Mzc4NjU4fQ.i_AqaSJL41mw5aeWqneXrv0UgsvxQVKTb1WdwvZIDEc
+```
+
+```shell
+$ curl -s -X GET http://localhost:4000/users \
+  -H "Accept: application/json" \
+  -H "Authorization: Bearer ${TOKEN}" | \
+  jq .
+
+[
+  {
+    "id": 1,
+    "firstName": "Test",
+    "lastName": "User",
+    "username": "test",
+    "password": null,
+    "token": null
+  },
+  {
+    "id": 2,
+    "firstName": "Produccion",
+    "lastName": "API",
+    "username": "produccion-api-username",
+    "password": null,
+    "token": null
+  }
+]
+```
