@@ -14,7 +14,7 @@ El presente proyecto tiene por objetivo servir como referencia para autenticarse
 $ git clone git@gitlab.com:sgte-it/trabajo/fiscalizacion/jwt_auth.git
 ```
 
-- Descargar las dependencias del y ejecutar el proyecto
+- Descargar las dependencias y ejecutar el proyecto
 
 ```shell
 $ cd jwt_auth/src
