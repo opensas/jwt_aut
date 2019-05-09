@@ -202,7 +202,7 @@ $ curl -s -X GET http://localhost:4000/users \
 
 ### Probando el servicio desde openshift
 
-A fin de realizar las pruebas, desplegamos un web service de prueba en Openshift en `http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com`. La misma puede ser utilizada de la siguiente manera:
+A fin de realizar las pruebas, desplegamos un web service de prueba en Openshift en `http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com`. (Debido a la política de openshift la instancia expirará el 05/10/2019). La misma puede ser utilizada de la siguiente manera:
 
 ```shell
 
