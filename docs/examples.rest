@@ -1,12 +1,16 @@
 # Variables
 
+# openshift endpoint
+# @apiUrl = http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com
+
+# local endpoint
 @apiUrl = http://localhost:4000
 @authUrl = {{apiUrl}}/users/authenticate
 
 @username = produccion-api-username
 @password = produccion-api-test-Lj1KzZii28
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODc5NzEsImV4cCI6MTU1NzM5Mjc3MSwiaWF0IjoxNTU2Nzg3OTcxfQ.fCWBV_Yw4w18dy305I_5klc_nlFIxTpugO6meH95jnE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTc0MjAwMjQsImV4cCI6MTU1ODAyNDgyNCwiaWF0IjoxNTU3NDIwMDI0fQ.ZNE36MJkpU9FBTN7lAU9lzNNeo5Y9Z-fbdkkD0IaGHs
 
 # form version
 curl -X POST "http://localhost:4000/users/authenticate" \
@@ -33,7 +37,6 @@ curl -H "Content-Type: application/json" -d "{/"Username/": /"test/",/"Password/
 curl -X GET http://localhost:4000/info \
   -H "Accept: application/json" \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY3ODkwNzEsImV4cCI6MTU1NzM5Mzg3MSwiaWF0IjoxNTU2Nzg5MDcxfQ.2vk-C83XRgI0CwNPXR1_zjsOTzk3OCVt2j_esdGxNqw"
-
 
 
 ###
@@ -69,20 +72,20 @@ authorization: Bearer {{token}}
 ###
 # Retorna error cuando el token pasado es erróneo
 # @name users.with_bad_token
-GET http://localhost:4000/users
+GET {{apiUrl}}/users
 accept: application/json
 authorization: Bearer !{{token}}
 
 ###
 # Retorna error cuando no pasan ningún token
 # @name users.with_no_token
-GET http://localhost:4000/users
+GET {{apiUrl}}/users
 accept: application/json
 
 ###
 # Retorna todos los usuarios cuando el token es pasado como
 # @name users.with_token
-GET http://localhost:4000/info
+GET {{apiUrl}}/info
 accept: application/json
 authorization: Bearer {{token}}
 
@@ -90,7 +93,7 @@ authorization: Bearer {{token}}
 ###
 # Retorna el token para el usuario {{username}} con la clave {{password}}
 # @name auth.get_token
-POST http://localhost:4000/users/authenticate
+POST {{apiUrl}}/users/authenticate
 content-type: application/json
 
 {
@@ -101,6 +104,6 @@ content-type: application/json
 ###
 # Retorna todos los usuarios cuando el token es pasado como
 # @name users.with_token
-GET http://localhost:4000/info
+GET {{apiUrl}}/info
 accept: application/json
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjIiLCJuYmYiOjE1NTY4MjkwODIsImV4cCI6MTU1NzQzMzg4MiwiaWF0IjoxNTU2ODI5MDgyfQ.FpPJtz-4tNtGmkf6RAu7RFm7eaadRryjqQlu4Uj7T9I

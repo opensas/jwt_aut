@@ -199,3 +199,57 @@ $ curl -s -X GET http://localhost:4000/users \
   }
 ]
 ```
+
+### Probando el servicio desde openshift
+
+A fin de realizar las pruebas, desplegamos un web service de prueba en Openshift en `http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com`. La misma puede ser utilizada de la siguiente manera:
+
+```shell
+
+OPENSHIFT_URL="http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com"
+
+TOKEN=$( \
+  curl -s \
+  -X POST ${OPENSHIFT_URL}/users/authenticate \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json" \
+  -d '{"Username": "produccion-api-username","Password": "produccion-api-test-Lj1KzZii28"}' | \
+  jq -r '.token' \
+)
+
+curl -s -X GET ${OPENSHIFT_URL}/info \
+  -H "Accept: application/json" \
+  -H "Authorization: Bearer ${TOKEN}" | \
+  jq .
+
+{
+  "http": {
+    "host": {
+      "value": "jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com",
+      "hasValue": true,
+      "host": "jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com",
+      "port": null
+    },
+    "cookies": [],
+[...]
+  "ip": {
+    "remote_ip": "::ffff:10.129.0.1",
+    "remote_port": 44080,
+    "local_ip": "::ffff:10.130.26.149",
+    "local_port": 8080
+  },
+  "platform": {
+    "c#": "v4.0.30319",
+    "runtime": ".NETCoreApp,Version=v2.2",
+    "netcore": "2.2.1",
+    "framework": ".NET Core 2.2.1 (Framework 4.6.27207.03)",
+    "framework_version": "4.6.27207.03"
+  },
+  "os": {
+    "description": "Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Oct 4 20:48:51 UTC 2018",
+    "architecture": "X64",
+    "process_architecture": "X64",
+    "server": "jwt-auth-gh-1-p28qw"
+  }
+}
+```
