@@ -202,11 +202,11 @@ $ curl -s -X GET http://localhost:4000/users \
 
 ### Probando el servicio desde openshift
 
-A fin de realizar las pruebas, desplegamos un web service de prueba en Openshift en `http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com`. (Debido a la política de openshift la instancia expirará el 05/10/2019). La misma puede ser utilizada de la siguiente manera:
+A fin de realizar las pruebas, desplegamos un web service de prueba en Openshift en `
+http://jwt-auth-jwt-auth.apps.us-east-2.online-starter.openshift.com`. (La instancia fue creada el 11 de junio, debido a la política de openshift la instancia expirará el 10/08/2019). La misma puede ser utilizada de la siguiente manera:
 
 ```shell
-
-OPENSHIFT_URL="http://jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com"
+OPENSHIFT_URL="http://jwt-auth-jwt-auth.apps.us-east-2.online-starter.openshift.com"
 
 TOKEN=$( \
   curl -s \
@@ -225,31 +225,31 @@ curl -s -X GET ${OPENSHIFT_URL}/info \
 {
   "http": {
     "host": {
-      "value": "jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com",
+      "value": "jwt-auth-jwt-auth.apps.us-east-2.online-starter.openshift.com",
       "hasValue": true,
-      "host": "jwt-auth-gh-oc-test.7e14.starter-us-west-2.openshiftapps.com",
+      "host": "jwt-auth-jwt-auth.apps.us-east-2.online-starter.openshift.com",
       "port": null
     },
     "cookies": [],
 [...]
   "ip": {
-    "remote_ip": "::ffff:10.129.0.1",
-    "remote_port": 44080,
-    "local_ip": "::ffff:10.130.26.149",
+    "remote_ip": "::ffff:10.130.12.13",
+    "remote_port": 57356,
+    "local_ip": "::ffff:10.128.5.25",
     "local_port": 8080
   },
   "platform": {
     "c#": "v4.0.30319",
     "runtime": ".NETCoreApp,Version=v2.2",
-    "netcore": "2.2.1",
-    "framework": ".NET Core 2.2.1 (Framework 4.6.27207.03)",
-    "framework_version": "4.6.27207.03"
+    "netcore": "2.2.5",
+    "framework": ".NET Core 2.2.5 (Framework 4.6.27617.05)",
+    "framework_version": "4.6.27617.05"
   },
   "os": {
-    "description": "Linux 3.10.0-957.el7.x86_64 #1 SMP Thu Oct 4 20:48:51 UTC 2018",
+    "description": "Linux 4.18.0-80.1.2.el8_0.x86_64 #1 SMP Sun Apr 28 09:21:22 UTC 2019",
     "architecture": "X64",
     "process_architecture": "X64",
-    "server": "jwt-auth-gh-1-p28qw"
+    "server": "jwt-auth-1-n8b8h"
   }
 }
 ```
